@@ -45,22 +45,25 @@ mysql -u root -p inspection_db < dump-inspection_db-202606150635.sql
 ---
 
 ## Modelo de datos
+
+```
 FormTemplate (Plantilla de formulario)
-└── revision: número de versión (1, 2, 3...)
-└── status: active | obsolete
-└── templateGroupId: agrupa revisiones del mismo formulario
-└── Category[] (ordenadas por order)
-└── Question[] (ordenadas por order)
+  └── revision: número de versión (1, 2, 3...)
+  └── status: active | obsolete
+  └── templateGroupId: agrupa revisiones del mismo formulario
+  └── Category[] (ordenadas por `order`)
+       └── Question[] (ordenadas por `order`)
 
 Company (Empresa inspeccionada)
+
 InspectionReport (Formulario realizado)
-└── → FormTemplate (con su revisión específica)
-└── → Company
-└── Answer[] (una por pregunta)
-└── value: "cumple" | "no_cumple" | "na"
-└── imagePath: ruta de imagen opcional (máx. 1)
-└── observation: texto libre
----
+  └── → FormTemplate (con su revisión específica)
+  └── → Company
+  └── Answer[] (una por pregunta)
+       └── value: "cumple" | "no_cumple" | "na"
+       └── imagePath: ruta de imagen opcional (máx. 1)
+       └── observation: texto libre
+```
 
 ## Endpoints
 
@@ -203,13 +206,17 @@ Lista todos los reportes.
 ---
 
 ## Flujo de revisiones
+
+```
 Formulario Rev.1 (active) ──► Nueva revisión
-│
-├── Rev.1 pasa a "obsolete"
-└── Rev.2 creada como "active"
+                                    │
+                                    ├── Rev.1 pasa a "obsolete"
+                                    └── Rev.2 creada como "active"
 
 Los reportes cargados con Rev.1 conservan su referencia histórica.
 No se puede cargar un nuevo reporte usando un formulario obsoleto.
+```
+
 ## Pruebas
 
 La colección de Postman con todos los endpoints probados se encuentra en:
