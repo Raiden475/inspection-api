@@ -4,49 +4,72 @@ API REST para gestión de formularios de inspección de empresas.
 
 ## Stack
 - **Node.js + Express**
-- **Sequelize ORM** con **PostgreSQL**
+- **Sequelize ORM** con **MariaDB**
 - **Multer** para manejo de imágenes adjuntas
 
 ## Configuración
 
 ```bash
 # 1. Instalar dependencias
-npm install
+pnpm install
 
 # 2. Configurar base de datos
 cp .env.example .env
-# Editar .env con tus credenciales de PostgreSQL
+# Editar .env con tus credenciales de MariaDB
 
-# 3. Crear la base de datos en PostgreSQL
-createdb inspection_db
+# 3. Crear la base de datos en MariaDB (DBeaver u otro cliente)
+# Crear una base de datos llamada inspection_db con charset utf8mb4 y collation utf8mb4_unicode_ci
 
 # 4. Levantar el servidor (sincroniza las tablas automáticamente)
-npm start
+pnpm start
+```
+
+## Variables de entorno (.env)
+
+```env
+PORT=3000
+NODE_ENV=development
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=inspection_db
+DB_USER=root
+DB_PASS=tu_password
+```
+
+## Importar base de datos con datos de prueba
+
+```bash
+mysql -u root -p inspection_db < dump-inspection_db-202606142321.sql
 ```
 
 ---
 
 ## Modelo de datos
-
-```
 FormTemplate (Plantilla de formulario)
-  └── revision: número de versión (1, 2, 3...)
-  └── status: active | obsolete
-  └── templateGroupId: agrupa revisiones del mismo formulario
-  └── Category[] (ordenadas por `order`)
-       └── Question[] (ordenadas por `order`)
 
+└── revision: número de versión (1, 2, 3...)
+
+└── status: active | obsolete
+
+└── templateGroupId: agrupa revisiones del mismo formulario
+
+└── Category[] (ordenadas por order)
+
+└── Question[] (ordenadas por order)
 Company (Empresa inspeccionada)
-
 InspectionReport (Formulario realizado)
-  └── → FormTemplate (con su revisión específica)
-  └── → Company
-  └── Answer[] (una por pregunta)
-       └── value: "cumple" | "no_cumple" | "na"
-       └── imagePath: ruta de imagen opcional (máx. 1)
-       └── observation: texto libre
-```
 
+└── → FormTemplate (con su revisión específica)
+
+└── → Company
+
+└── Answer[] (una por pregunta)
+
+└── value: "cumple" | "no_cumple" | "na"
+
+└── imagePath: ruta de imagen opcional (máx. 1)
+
+└── observation: texto libre
 ---
 
 ## Endpoints
@@ -190,13 +213,24 @@ Lista todos los reportes.
 ---
 
 ## Flujo de revisiones
-
-```
 Formulario Rev.1 (active) ──► Nueva revisión
-                                    │
-                                    ├── Rev.1 pasa a "obsolete"
-                                    └── Rev.2 creada como "active"
 
+│
+
+├── Rev.1 pasa a "obsolete"
+
+└── Rev.2 creada como "active"
 Los reportes cargados con Rev.1 conservan su referencia histórica.
+
 No se puede cargar un nuevo reporte usando un formulario obsoleto.
-```
+## Pruebas
+
+La colección de Postman con todos los endpoints probados se encuentra en:
+`Inspection API.postman_collection.json`
+
+Importala en Postman desde **File → Import** y ejecutá las requests en orden:
+1. POST Crear empresa
+2. POST Crear formulario
+3. POST Cargar reporte de inspección
+4. GET Obtener reporte completo
+5. POST Nueva revisión del formulario
