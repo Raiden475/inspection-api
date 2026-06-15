@@ -1,0 +1,164 @@
+{
+  "info": {
+    "_postman_id": "49146ab7-267d-4225-91e9-7c1ee3b5b9ce",
+    "name": "Inspection API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "38540401"
+  },
+  "item": [
+    {
+      "name": "http://localhost:3000/api/companies",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"YPF S.A.\",\r\n  \"cuit\": \"30-54668997-9\",\r\n  \"address\": \"Macacha Güemes 515, CABA\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/companies",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "companies"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/api/form-templates",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Formulario de Seguridad e Higiene\",\r\n  \"categories\": [\r\n    {\r\n      \"title\": \"Instalaciones Eléctricas\",\r\n      \"order\": 1,\r\n      \"questions\": [\r\n        { \"text\": \"¿Los tableros eléctricos están señalizados?\", \"order\": 1 },\r\n        { \"text\": \"¿Las instalaciones tienen puesta a tierra?\", \"order\": 2 }\r\n      ]\r\n    },\r\n    {\r\n      \"title\": \"Matafuegos\",\r\n      \"order\": 2,\r\n      \"questions\": [\r\n        { \"text\": \"¿Los matafuegos están vigentes?\", \"order\": 1 },\r\n        { \"text\": \"¿Están ubicados en lugares accesibles?\", \"order\": 2 }\r\n      ]\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/form-templates",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "form-templates"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/api/inspection-reports",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"formTemplateId\": 1,\r\n  \"companyId\": 1,\r\n  \"inspectionDate\": \"2026-06-15\",\r\n  \"inspectorName\": \"Juan Pérez\",\r\n  \"notes\": \"Inspección rutinaria\",\r\n  \"answers\": [\r\n    { \"questionId\": 1, \"value\": \"cumple\" },\r\n    { \"questionId\": 2, \"value\": \"no_cumple\", \"observation\": \"Sin puesta a tierra en sector B\" },\r\n    { \"questionId\": 3, \"value\": \"cumple\" },\r\n    { \"questionId\": 4, \"value\": \"na\" }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/inspection-reports",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "inspection-reports"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/api/inspection-reports/1",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/inspection-reports/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "inspection-reports",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:3000/api/form-templates/1/new-revision",
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Formulario de Seguridad e Higiene\",\r\n  \"categories\": [\r\n    {\r\n      \"title\": \"Instalaciones Eléctricas\",\r\n      \"order\": 1,\r\n      \"questions\": [\r\n        { \"text\": \"¿Los tableros eléctricos están señalizados?\", \"order\": 1 },\r\n        { \"text\": \"¿Las instalaciones tienen puesta a tierra?\", \"order\": 2 },\r\n        { \"text\": \"¿Los cables están correctamente identificados?\", \"order\": 3 }\r\n      ]\r\n    },\r\n    {\r\n      \"title\": \"Matafuegos\",\r\n      \"order\": 2,\r\n      \"questions\": [\r\n        { \"text\": \"¿Los matafuegos están vigentes?\", \"order\": 1 },\r\n        { \"text\": \"¿Están ubicados en lugares accesibles?\", \"order\": 2 }\r\n      ]\r\n    },\r\n    {\r\n      \"title\": \"Señalización\",\r\n      \"order\": 3,\r\n      \"questions\": [\r\n        { \"text\": \"¿Las salidas de emergencia están señalizadas?\", \"order\": 1 },\r\n        { \"text\": \"¿Los equipos de seguridad están identificados?\", \"order\": 2 }\r\n      ]\r\n    }\r\n  ]\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/form-templates/1/new-revision",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "form-templates",
+            "1",
+            "new-revision"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
